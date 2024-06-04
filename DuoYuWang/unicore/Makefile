@@ -1,0 +1,12 @@
+include $(APPDIR)/Make.defs
+
+PROGNAME  = $(CONFIG_DYW_UNICORE_PROGNAME)
+PRIORITY  = $(CONFIG_DYW_UNICORE_PRIORITY)
+STACKSIZE = $(CONFIG_DYW_UNICORE_STACKSIZE)
+MODULE    = $(CONFIG_DYW_UNICORE)
+
+MAINSRC = unicore_main.cxx
+
+CXXSRCS = unicore.cxx
+
+include $(APPDIR)/Application.mk

@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_DYW_WEBSERVER_FMU),)
+CONFIGURED_APPS += $(APPDIR)/DuoYuWang/webserver_fmu
+endif

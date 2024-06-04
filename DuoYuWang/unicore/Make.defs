@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_DYW_UNICORE),)
+CONFIGURED_APPS += $(APPDIR)/DuoYuWang/unicore
+endif

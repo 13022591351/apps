@@ -1,0 +1,11 @@
+ifneq ($(CONFIG_DYW_MQTTC),)
+CONFIGURED_APPS += $(APPDIR)/DuoYuWang/mqttc
+
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/DuoYuWang/mqttc/include
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/DuoYuWang/mqttc/include
+
+ifneq ($(CONFIG_DYW_MQTTC_WITH_MBEDTLS),)
+CFLAGS += -DMQTT_USE_MBEDTLS
+endif
+
+endif

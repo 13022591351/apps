@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_DYW_RTCM3_PROXY),)
+CONFIGURED_APPS += $(APPDIR)/DuoYuWang/rtcm3_proxy
+endif

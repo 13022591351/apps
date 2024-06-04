@@ -1,0 +1,18 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config DYW_MQTTC
+	tristate "Enable MQTT-C"
+	default n
+	---help---
+		Enable MQTT-C
+
+if DYW_MQTTC
+
+config DYW_MQTTC_WITH_MBEDTLS
+	bool "Enable MQTT-C with mbedtls"
+	default n
+
+endif

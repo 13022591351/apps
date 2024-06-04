@@ -316,6 +316,7 @@ int cmd_echo(FAR struct nsh_vtbl_s *vtbl, int argc, FAR char **argv)
               case 'e':
               case 'E':
               case 'n':
+              case 'c':
                 break;
               default:
                 goto do_echo;
@@ -342,6 +343,10 @@ int cmd_echo(FAR struct nsh_vtbl_s *vtbl, int argc, FAR char **argv)
               case 'n':
                 newline = 0;
                 break;
+
+              case 'c':
+                newline = 2;
+                break;
             }
         }
 
@@ -367,9 +372,14 @@ do_echo:
         }
     }
 
-  if (newline)
+  if (newline == 1)
     {
       nsh_output(vtbl, "\n");
+    }
+
+  if (newline == 2)
+    {
+      nsh_output(vtbl, "\r\n");
     }
 
   return OK;

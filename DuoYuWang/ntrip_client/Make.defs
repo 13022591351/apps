@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_DYW_NTRIP_CLIENT),)
+CONFIGURED_APPS += $(APPDIR)/DuoYuWang/ntrip_client
+endif

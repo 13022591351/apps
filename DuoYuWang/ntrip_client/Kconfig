@@ -1,0 +1,35 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config DYW_NTRIP_CLIENT
+	tristate "\"Ntrip Client\" App"
+	default n
+	depends on NET_TCP
+	---help---
+		Enable the \"Ntrip Client\" App
+
+if DYW_NTRIP_CLIENT
+
+config DYW_NTRIP_CLIENT_PROGNAME
+	string "Program name"
+	default "ntrip_client"
+
+config DYW_NTRIP_CLIENT_PRIORITY
+	int "Ntrip Client task priority"
+	default 100
+
+config DYW_NTRIP_CLIENT_STACKSIZE
+	int "Ntrip Client stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config DYW_NTRIP_DBG_ERR
+	tristate "NTRIP printf err"
+	default n
+
+config DYW_NTRIP_DBG_INFO
+	tristate "NTRIP printf info"
+	default n
+
+endif

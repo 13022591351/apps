@@ -1,0 +1,7 @@
+ifneq ($(CONFIG_DYW_UORB_FMU),)
+CONFIGURED_APPS += $(APPDIR)/DuoYuWang/uorb_fmu
+
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/DuoYuWang/uorb_fmu
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/DuoYuWang/uorb_fmu
+
+endif

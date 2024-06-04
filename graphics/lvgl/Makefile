@@ -96,10 +96,12 @@ endif
 
 WD := ${shell echo $(CURDIR) | sed -e 's/ /\\ /g'}
 
-CONFIG_GRAPH_LVGL_URL ?= "https://github.com/lvgl/lvgl/archive/refs/tags"
+# CONFIG_GRAPH_LVGL_URL ?= "https://github.com/lvgl/lvgl/archive/refs/tags"
+CONFIG_GRAPH_LVGL_URL ?= "file:///home/wang/Work/nuttxspace/3rd"
 
 LVGL_VERSION = $(patsubst "%",%,$(strip $(CONFIG_LVGL_VERSION)))
-LVGL_TARBALL = v$(LVGL_VERSION).zip
+# LVGL_TARBALL = v$(LVGL_VERSION).zip
+LVGL_TARBALL = lvgl-v$(LVGL_VERSION).zip
 
 LVGL_UNPACKNAME = lvgl
 UNPACK ?= unzip -o $(if $(V),,-q)

@@ -1,0 +1,24 @@
+config DYW_WEBSERVER_FMU
+	tristate "FMU web server example"
+	default n
+	---help---
+		Enable the FMU web server example
+
+if DYW_WEBSERVER_FMU
+
+config DYW_WEBSERVER_FMU_PROGNAME
+	string "Program name"
+	default "webserver"
+	---help---
+		This is the name of the program that will be used when the NSH ELF
+		program is installed.
+
+config DYW_WEBSERVER_FMU_PRIORITY
+	int "WEBSERVER_FMU task priority"
+	default 100
+
+config DYW_WEBSERVER_FMU_STACKSIZE
+	int "WEBSERVER_FMU stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif

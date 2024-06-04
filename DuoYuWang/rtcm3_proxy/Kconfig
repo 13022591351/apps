@@ -1,0 +1,37 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config DYW_RTCM3_PROXY
+	tristate "\"RTCM3 Proxy\" App"
+	default n
+	---help---
+		Enable the \"RTCM3 Proxy\" App
+
+if DYW_RTCM3_PROXY
+
+config DYW_RTCM3_PROXY_PROGNAME
+	string "Program name"
+	default "rtcm3_proxy"
+	---help---
+		This is the name of the program that will be used when the NSH ELF
+		program is installed.
+
+config DYW_RTCM3_PROXY_PRIORITY
+	int "RTCM3 Proxy task priority"
+	default 100
+
+config DYW_RTCM3_PROXY_STACKSIZE
+	int "RTCM3 Proxy stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config DYW_RTCM3_PROXY_DBG_ERR
+	tristate "RTCM3 Proxy printf err"
+	default n
+
+config DYW_RTCM3_PROXY_DBG_INFO
+	tristate "RTCM3 Proxy printf info"
+	default n
+
+endif
