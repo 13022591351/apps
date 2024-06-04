@@ -25,68 +25,7 @@ include $(APPDIR)/Make.defs
 LVGL_DIR = .
 LVGL_DIR_NAME = lvgl
 
-# Relax LVGL's format checking and unused variable checking to avoid errors
-
-CFLAGS += -Wno-format -Wno-format-security -Wno-unused-variable
-
-# Since this change is only merged into the lvgl.v9, let us workaround for v8
-# ./lvgl/src/core/lv_obj.c:363:25: warning: variable 'x' set but not used [-Wunused-but-set-variable]
-#   363 |         static uint32_t x = 0;
-#       |                         ^
-# 1 warning generated.
-
-CFLAGS += -Wno-unused-but-set-variable
-
 -include ./lvgl/lvgl.mk
-
-CSRCS += port/lv_port.c
-CSRCS += port/lv_port_tick.c
-
-ifeq ($(CONFIG_LIBUV),y)
-CSRCS += port/lv_port_libuv.c
-endif
-
-ifeq ($(CONFIG_LV_PORT_USE_LCDDEV),y)
-CSRCS += port/lv_port_lcddev.c
-endif
-
-ifeq ($(CONFIG_LV_PORT_USE_FBDEV),y)
-CSRCS += port/lv_port_fbdev.c
-endif
-
-ifeq ($(CONFIG_LV_PORT_USE_TOUCHPAD),y)
-CSRCS += port/lv_port_touchpad.c
-endif
-
-ifeq ($(CONFIG_LV_PORT_USE_BUTTON),y)
-CSRCS += port/lv_port_button.c
-endif
-
-ifeq ($(CONFIG_LV_PORT_USE_KEYPAD),y)
-CSRCS += port/lv_port_keypad.c
-endif
-
-ifeq ($(CONFIG_LV_PORT_USE_ENCODER),y)
-CSRCS += port/lv_port_encoder.c
-endif
-
-ifeq ($(CONFIG_LV_USE_LOG),y)
-CSRCS += port/lv_port_syslog.c
-endif
-
-ifneq ($(CONFIG_LV_PORT_MEM_ATTRIBUTE_FAST_MEM_SECTION_NAME), "")
-CFLAGS   += "-DLV_ATTRIBUTE_FAST_MEM=locate_data(CONFIG_LV_PORT_MEM_ATTRIBUTE_FAST_MEM_SECTION_NAME)"
-CXXFLAGS += "-DLV_ATTRIBUTE_FAST_MEM=locate_data(CONFIG_LV_PORT_MEM_ATTRIBUTE_FAST_MEM_SECTION_NAME)"
-endif
-
-ifeq ($(CONFIG_LV_MEM_CUSTOM),y)
-ifneq ($(CONFIG_LV_PORT_MEM_CUSTOM_SIZE), 0)
-CFLAGS += "-DLV_MEM_CUSTOM_ALLOC=lv_port_mem_alloc"
-CFLAGS += "-DLV_MEM_CUSTOM_FREE=lv_port_mem_free"
-CFLAGS += "-DLV_MEM_CUSTOM_REALLOC=lv_port_mem_realloc"
-CSRCS  += port/lv_port_mem.c
-endif
-endif
 
 ifneq ($(CONFIG_LV_ASSERT_HANDLER_INCLUDE), "")
 CFLAGS += "-DLV_ASSERT_HANDLER=ASSERT(0);"
@@ -99,9 +38,10 @@ WD := ${shell echo $(CURDIR) | sed -e 's/ /\\ /g'}
 # CONFIG_GRAPH_LVGL_URL ?= "https://github.com/lvgl/lvgl/archive/refs/tags"
 CONFIG_GRAPH_LVGL_URL ?= "file:///home/wang/Work/nuttxspace/3rd"
 
-LVGL_VERSION = $(patsubst "%",%,$(strip $(CONFIG_LVGL_VERSION)))
-# LVGL_TARBALL = v$(LVGL_VERSION).zip
-LVGL_TARBALL = lvgl-v$(LVGL_VERSION).zip
+LVGL_PATCHS ?= $(sort $(wildcard 000*.patch))
+
+LVGL_VERSION = 9.1.0
+LVGL_TARBALL = v$(LVGL_VERSION).zip
 
 LVGL_UNPACKNAME = lvgl
 UNPACK ?= unzip -o $(if $(V),,-q)
@@ -118,16 +58,19 @@ $(LVGL_UNPACKNAME): $(LVGL_TARBALL)
 	$(ECHO_BEGIN)"Unpacking: $(LVGL_TARBALL) -> $(LVGL_UNPACKNAME)"
 	$(Q) $(UNPACK) $(LVGL_TARBALL)
 	$(Q) mv	lvgl-$(LVGL_VERSION) $(LVGL_UNPACKNAME)
+	$(Q) cat $(LVGL_PATCHS) | patch -s -N -d $(LVGL_UNPACKNAME) -p1
 	$(Q) touch $(LVGL_UNPACKNAME)
 	$(ECHO_END)
 
 # Download and unpack tarball if no git repo found
 ifeq ($(wildcard $(LVGL_UNPACKNAME)/.git),)
 context:: $(LVGL_UNPACKNAME)
+endif
 
+include $(APPDIR)/Application.mk
+
+ifeq ($(wildcard $(LVGL_UNPACKNAME)/.git),)
 distclean::
 	$(call DELDIR, $(LVGL_UNPACKNAME))
 	$(call DELFILE, $(LVGL_TARBALL))
 endif
-
-include $(APPDIR)/Application.mk

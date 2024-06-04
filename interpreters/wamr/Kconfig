@@ -47,6 +47,16 @@ config INTERPRETERS_WAMR_AOT_QUICK_ENTRY
 		signature.
 		Enable this option will increase the size of runtime, ~8KB.
 
+config INTERPRETERS_WAMR_AOT_WORD_ALIGN_READ
+	bool "Make WAMR AOT loader use word-aligned read"
+	default y if ARCH_TEXT_HEAP_WORD_ALIGNED_READ
+	default n
+
+config INTERPRETERS_WAMR_MEM_DUAL_BUS_MIRROR
+	bool "Make WAMR AOT loader aware of separate instruction/data memory mapping"
+	default y if ARCH_TEXT_HEAP_SEPARATE_DATA_ADDRESS
+	default n
+
 choice
 	prompt "Enable interpreter"
 	default INTERPRETERS_NONE
@@ -190,7 +200,12 @@ config INTERPRETERS_WAMR_DUMP_CALL_STACK
 
 config INTERPRETERS_WAMR_DISABLE_HW_BOUND_CHECK
 	bool "Disable hardware bound check"
-	default n
+	default y
+	---help---
+		This option is currently a no-op because
+		NuttX doesn't have necessary functionalities.
+		That is, regardless of this setting, WAMR's HW bounds
+		check is not available for NuttX.
 
 config INTERPRETERS_WAMR_LOAD_CUSTOM_SECTIONS
 	bool "Enable load custom section support"
