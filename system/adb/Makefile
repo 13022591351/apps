@@ -21,7 +21,7 @@
 include $(APPDIR)/Make.defs
 
 ADB_URL ?= "https://github.com/spiriou/microADB/archive"
-ADB_VERSION ?= b0bc09a7612000186df723f2fe55705b1c2fe873
+ADB_VERSION ?= master
 
 ADB_DIR := $(APPDIR)/system/adb
 ADB_UNPACKNAME := microADB
@@ -52,7 +52,6 @@ CSRCS += $(ADB_UNPACKNAME)/hal/hal_uv.c
 CSRCS += $(ADB_UNPACKNAME)/hal/hal_uv_packet.c
 
 CFLAGS += -I$(ADB_UNPACKNAME)
-CFLAGS += -Wno-unused-variable -Wno-unused-but-set-variable
 
 ifeq ($(CONFIG_ADBD_TCP_SERVER),y)
 CSRCS += $(ADB_UNPACKNAME)/hal/hal_uv_client_tcp.c
