@@ -35,8 +35,7 @@ endif
 
 WD := ${shell echo $(CURDIR) | sed -e 's/ /\\ /g'}
 
-# CONFIG_GRAPH_LVGL_URL ?= "https://github.com/lvgl/lvgl/archive/refs/tags"
-CONFIG_GRAPH_LVGL_URL ?= "file:///home/wang/Work/nuttxspace/3rd"
+CONFIG_GRAPH_LVGL_URL ?= "file:///home/wang/Work/nuttxspace/3rd/lvgl"
 
 LVGL_PATCHS ?= $(sort $(wildcard 000*.patch))
 

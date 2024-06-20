@@ -10,7 +10,7 @@
 
 #include <string>
 
-#define NTRIP_MAX_LENGTH 1200
+#define NTRIP_MAX_LENGTH 2400
 
 class NtripClient {
 public:
@@ -46,6 +46,7 @@ private:
 
     sockaddr_in                     m_server;
     int                             m_sock_fd           { 0       };
+    std::string                     m_ntrip_line;
 
     int m_net_init(void);
     int m_net_deinit(void);
@@ -56,7 +57,9 @@ private:
     orb_abstime m_last_recv_time                        { 0       };
 
     std::string m_base64_encode(const std::string &src);
+    uint32_t    m_crc_crc24(const uint8_t *bytes, uint16_t len);
     void        m_ntrip_decode(void);
+    void        m_rtcm_decode(void);
 
     Sub_Helper<orb_gps_raw_gga_t>  *m_sub_gga_raw       { nullptr };
     Pub_Helper<orb_rtcm_t>         *m_pub_rtcm_ntrip    { nullptr };

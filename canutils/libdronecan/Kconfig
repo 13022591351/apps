@@ -14,7 +14,7 @@ if CANUTILS_LIBDRONECAN
 
 config LIBDRONECAN_URL
 	string "libcanard URL"
-	default "https://github.com/dronecan/libcanard/archive"
+	default "file:///home/wang/Work/nuttxspace/3rd/libcanard"
 	---help---
 		libcanard URL.
 

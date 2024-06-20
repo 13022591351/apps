@@ -6,7 +6,7 @@
 
 struct orb_gps_raw_gga_t {
     uint64_t    timestamp;
-    uint8_t     gga_raw[80] { '\0' };
+    uint8_t     gga_raw[100] { '\0' };
 };
 
 struct orb_rtcm_t {
