@@ -27,6 +27,7 @@ MODULE    = $(CONFIG_INTERPRETERS_TOYWASM)
 
 # cli
 MAINSRC = main.c
+CSRCS += str_to_uint.c
 CSRCS += repl.c
 
 # lib
@@ -49,6 +50,7 @@ CSRCS += instance.c
 CSRCS += leb128.c
 CSRCS += list.c
 CSRCS += load_context.c
+CSRCS += mem.c
 CSRCS += module.c
 CSRCS += module_writer.c
 CSRCS += name.c
@@ -129,6 +131,7 @@ endif
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/interpreters/toywasm/include
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/interpreters/toywasm/toywasm/lib
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/interpreters/toywasm/toywasm/libwasi
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/interpreters/toywasm/toywasm/libwasi_threads
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/interpreters/toywasm/toywasm/libdyld
 
 # Keep the compilation parameters consistent with toywasm mainline
@@ -136,7 +139,7 @@ CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/interpreters/toywasm/toywasm/libdyld
 
 CFLAGS += -Wno-unknown-warning-option -Wno-unused-but-set-variable -Wno-unused-variable -Wno-return-type
 
-TOYWASM_VERSION  = 9f77f3519f84e9bb0074d855a04d731a5f56ce84
+TOYWASM_VERSION  = b43dd5312988a6dbc2b165c5956697d7f1d16000
 TOYWASM_UNPACK   = toywasm
 TOYWASM_TARBALL  = $(TOYWASM_VERSION).zip
 TOYWASM_URL_BASE = https://github.com/yamt/toywasm/archive/
@@ -145,6 +148,7 @@ TOYWASM_URL      = $(TOYWASM_URL_BASE)/$(TOYWASM_TARBALL)
 VPATH += $(TOYWASM_UNPACK)/cli
 VPATH += $(TOYWASM_UNPACK)/lib
 VPATH += $(TOYWASM_UNPACK)/libwasi
+VPATH += $(TOYWASM_UNPACK)/libwasi_threads
 VPATH += $(TOYWASM_UNPACK)/libdyld
 VPATH += src
 
