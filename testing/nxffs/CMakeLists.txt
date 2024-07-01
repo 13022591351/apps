@@ -19,5 +19,6 @@
 # ##############################################################################
 
 if(CONFIG_TESTING_NXFFS)
-  nuttx_add_application(NAME nxffs SRCS nxffs_main.c)
+  nuttx_add_application(NAME nxffs MODULE ${CONFIG_TESTING_NXFFS} SRCS
+                        nxffs_main.c)
 endif()

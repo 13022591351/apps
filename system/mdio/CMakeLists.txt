@@ -19,5 +19,5 @@
 # ##############################################################################
 
 if(CONFIG_SYSTEM_MDIO)
-  nuttx_add_application(NAME mdio)
+  nuttx_add_application(MODULE ${CONFIG_SYSTEM_MDIO} NAME mdio SRCS mdio_main.c)
 endif()
